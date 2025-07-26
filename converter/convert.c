@@ -19,7 +19,7 @@ RGB palette[] = {
     {0, 0, 255},     // Blue
     {255, 0, 0},     // Red
     {255, 255, 0},   // Yellow
-    {255, 128, 0}    // Orange
+    {255, 125, 0}    // Orange
 };
 #define PALETTE_SIZE 7
 
