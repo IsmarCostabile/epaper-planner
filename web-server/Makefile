@@ -18,7 +18,7 @@ EPLIB_SRCS = \
 	$(EPLIB_DIR)/Config/sysfs_software_spi.c
 
 CFLAGS = -Wall -I$(EPLIB_DIR)/Config -I$(EPLIB_DIR)/e-Paper -I$(EPLIB_DIR)/Fonts -I$(EPLIB_DIR)/GUI -DRPI -DUSE_DEV_LIB
-LDFLAGS = -lrt
+LDFLAGS = -lrt -lgpiod -lm
 
 TARGET = epaper_web_server
 
