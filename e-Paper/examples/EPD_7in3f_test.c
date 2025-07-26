@@ -62,7 +62,15 @@ int EPD_7in3f_test(void)
 
 #if 1   // show bmp
 
-    printf("c-converter image test-----------------\r\n");
+    printf("c-converter image test historic-----------------\r\n");
+    Paint_SelectImage(BlackImage);
+    Paint_Clear(EPD_7IN3F_WHITE);
+    GUI_ReadBmp_RGB_7Color("./pic/historic.bmp", 0, 0);
+    EPD_7IN3F_Display(BlackImage);
+    DEV_Delay_ms(3000);
+
+
+    printf("c-converter image test wp-----------------\r\n");
     Paint_SelectImage(BlackImage);
     Paint_Clear(EPD_7IN3F_WHITE);
     GUI_ReadBmp_RGB_7Color("./pic/image_scale_output.bmp", 0, 0);
