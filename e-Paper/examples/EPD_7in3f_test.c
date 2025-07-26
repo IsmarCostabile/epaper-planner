@@ -62,9 +62,17 @@ int EPD_7in3f_test(void)
 
 #if 1   // show bmp
 
-    Paint_ClearWindows(0, 100, 200, 300, EPD_7IN3F_GREEN);
+    printf("show python script converted image-----------------\r\n");
+    Paint_SelectImage(BlackImage);
+    Paint_Clear(EPD_7IN3F_WHITE);
+    GUI_ReadBmp_RGB_7Color("./pic/output.bmp", 0, 0);
     EPD_7IN3F_Display(BlackImage);
+    DEV_Delay_ms(3000);
 
+#endif    
+
+#if 1   // show bmp
+    
     printf("show7block------------------------\r\n");
     Paint_SelectImage(BlackImage);
     EPD_7IN3F_Show7Block();
