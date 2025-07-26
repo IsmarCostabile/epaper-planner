@@ -62,10 +62,10 @@ int EPD_7in3f_test(void)
 
 #if 1   // show bmp
 
-    printf("show python script converted image-----------------\r\n");
+    printf("c-converter image test-----------------\r\n");
     Paint_SelectImage(BlackImage);
     Paint_Clear(EPD_7IN3F_WHITE);
-    GUI_ReadBmp_RGB_7Color("./pic/output.bmp", 0, 0);
+    GUI_ReadBmp_RGB_7Color("./pic/image_scale_output.bmp", 0, 0);
     EPD_7IN3F_Display(BlackImage);
     DEV_Delay_ms(3000);
 
