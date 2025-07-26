@@ -61,17 +61,49 @@ int EPD_7in3f_test(void)
     Paint_SetScale(7);
 
 #if 1   // show bmp
-    printf("show colors-----------------\r\n");
+
+    printf("show blue------------------------\r\n");
+    Paint_SelectImage(BlackImage);
+    Paint_Clear(EPD_7IN3F_BLUE);
+    EPD_7IN3F_Display(BlackImage);
+    DEV_Delay_ms(3000);
+
+    printf("show yellow------------------------\r\n");
+    Paint_SelectImage(BlackImage);
+    Paint_Clear(EPD_7IN3F_YELLOW);
+    EPD_7IN3F_Display(BlackImage);
+    DEV_Delay_ms(3000);
+
+    printf("show red------------------------\r\n");
+    Paint_SelectImage(BlackImage);
+    Paint_Clear(EPD_7IN3F_RED);
+    EPD_7IN3F_Display(BlackImage);
+    DEV_Delay_ms(3000);
+
+    printf("show green------------------------\r\n");
     Paint_SelectImage(BlackImage);
     Paint_Clear(EPD_7IN3F_GREEN);
     EPD_7IN3F_Display(BlackImage);
     DEV_Delay_ms(3000);
 
-    printf("show bmp2------------------------\r\n");
+    printf("show orange------------------------\r\n");
     Paint_SelectImage(BlackImage);
-    GUI_ReadBmp_RGB_7Color("./pic/7in3f1.bmp", 0, 0);
+    Paint_Clear(EPD_7IN3F_ORANGE);
     EPD_7IN3F_Display(BlackImage);
     DEV_Delay_ms(3000);
+
+    printf("show black------------------------\r\n");
+    Paint_SelectImage(BlackImage);
+    Paint_Clear(EPD_7IN3F_BLACK);
+    EPD_7IN3F_Display(BlackImage);
+    DEV_Delay_ms(3000);   
+
+    printf("show white------------------------\r\n");
+    Paint_SelectImage(BlackImage);
+    Paint_Clear(EPD_7IN3F_WHITE);
+    EPD_7IN3F_Display(BlackImage);
+    DEV_Delay_ms(3000);
+
 #endif    
 
 #if 1   // show bmp
