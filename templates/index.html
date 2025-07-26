@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Epaper Home</title>
+</head>
+<body>
+    <h1>Welcome to Epaper Control</h1>
+    <button id="press-btn">Press Me</button>
+    <div id="result"></div>
+    <script>
+        document.getElementById('press-btn').onclick = async function() {
+            const res = await fetch('/button');
+            const text = await res.text();
+            document.getElementById('result').innerHTML = text;
+        };
+    </script>
+</body>
+</html>
