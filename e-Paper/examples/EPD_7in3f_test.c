@@ -62,10 +62,10 @@ int EPD_7in3f_test(void)
 
 #if 1   // show bmp
 
-    printf("show blue------------------------\r\n");
+
+    printf("show7block------------------------\r\n");
     Paint_SelectImage(BlackImage);
-    Paint_Clear(EPD_7IN3F_BLUE);
-    EPD_7IN3F_Display(BlackImage);
+    EPD_7IN3F_Show7Block();
     DEV_Delay_ms(3000);
 
     printf("show yellow------------------------\r\n");
