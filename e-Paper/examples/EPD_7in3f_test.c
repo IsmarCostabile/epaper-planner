@@ -61,6 +61,20 @@ int EPD_7in3f_test(void)
     Paint_SetScale(7);
 
 #if 1   // show bmp
+    printf("show colors-----------------\r\n");
+    Paint_SelectImage(BlackImage);
+    Paint_Clear(EPD_7IN3F_GREEN);
+    EPD_7IN3F_Display(BlackImage);
+    DEV_Delay_ms(3000);
+
+    printf("show bmp2------------------------\r\n");
+    Paint_SelectImage(BlackImage);
+    GUI_ReadBmp_RGB_7Color("./pic/7in3f1.bmp", 0, 0);
+    EPD_7IN3F_Display(BlackImage);
+    DEV_Delay_ms(3000);
+#endif    
+
+#if 1   // show bmp
     printf("show bmp1-----------------\r\n");
     Paint_SelectImage(BlackImage);
     Paint_Clear(EPD_7IN3F_WHITE);
