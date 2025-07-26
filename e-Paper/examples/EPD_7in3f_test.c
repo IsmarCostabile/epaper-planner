@@ -62,6 +62,8 @@ int EPD_7in3f_test(void)
 
 #if 1   // show bmp
 
+    Paint_ClearWindows(0, 100, 200, 300, EPD_7IN3F_GREEN);
+    EPD_7IN3F_Display(BlackImage);
 
     printf("show7block------------------------\r\n");
     Paint_SelectImage(BlackImage);
