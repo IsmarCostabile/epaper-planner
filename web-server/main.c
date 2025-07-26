@@ -5,22 +5,26 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
+#include "DEV_Config.h"
+#include "EPD_7in3f.h"
+
 #define PORT 8080
 #define BUFFER_SIZE 1024
 
-// Placeholder for e-paper initialization
+// E-paper initialization
 void init_epaper() {
-    printf("E-paper initialized (placeholder)\n");
-    // In a real scenario, you would call DEV_Module_Init() and EPD_7IN3F_Init() here.
-    // DEV_Module_Init();
-    // EPD_7IN3F_Init();
+    printf("E-paper initialized\n");
+    if (DEV_Module_Init() != 0) {
+        printf("DEV_Module_Init failed\n");
+        return;
+    }
+    EPD_7IN3F_Init();
 }
 
-// Placeholder for clearing e-paper
+// Clearing e-paper
 void clear_epaper() {
-    printf("E-paper cleared (placeholder)\n");
-    // In a real scenario, you would call EPD_7IN3F_Clear() here.
-    // EPD_7IN3F_Clear(0xFF); // Assuming 0xFF is white for clearing
+    printf("E-paper cleared\n");
+    EPD_7IN3F_Clear(0xFF); // Assuming 0xFF is white for clearing
 }
 
 void handle_request(int client_socket) {
