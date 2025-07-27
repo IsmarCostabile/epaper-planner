@@ -1,6 +1,6 @@
 CC = gcc
 CIVETWEB_DIR = civetweb/
-CIVETWEB_SRCS = $(CIVETWEB_DIR)/civetweb.c $(CIVETWEB_DIR)/main.c
+CIVETWEB_SRCS = $(CIVETWEB_DIR)/civetweb.c main.c
 EPLIB_DIR = ../epaper-lib
 EPLIB_SRCS = \
     $(EPLIB_DIR)/Config/DEV_Config.c \

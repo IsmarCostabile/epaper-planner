@@ -7,12 +7,13 @@
 
 // E-paper initialization
 void init_epaper() {
-    printf("E-paper initialized\n");
+    printf("Initializing e-paper\n");
     if (DEV_Module_Init() != 0) {
         printf("DEV_Module_Init failed\n");
         return;
     }
     EPD_7IN3F_Init();
+    printf("E-paper initialized\n");
 }
 
 // Clearing e-paper
@@ -70,11 +71,8 @@ int main() {
 
     printf("Server running on http://localhost:8080\n");
 
-    printf("Initializing e-paper");
     init_epaper();
-    printf("finished initializing e-paper");
 
-    // Keep server running
     while (1) {
         sleep(1);
     }
