@@ -1,8 +1,6 @@
 CC = gcc
-
 CIVETWEB_DIR = .
 CIVETWEB_SRCS = $(CIVETWEB_DIR)/civetweb.c $(CIVETWEB_DIR)/main.c
-
 EPLIB_DIR = ../epaper-lib
 EPLIB_SRCS = \
     $(EPLIB_DIR)/Config/DEV_Config.c \
@@ -21,9 +19,10 @@ EPLIB_SRCS = \
     $(EPLIB_DIR)/Config/sysfs_gpio.c \
     $(EPLIB_DIR)/Config/sysfs_software_spi.c
 
-CFLAGS = -Wall -I$(EPLIB_DIR)/Config -I$(EPLIB_DIR)/e-Paper -I$(EPLIB_DIR)/Fonts -I$(EPLIB_DIR)/GUI -I. -DRPI -DUSE_DEV_LIB
-LDFLAGS = -lrt -lgpiod -lm
+# disable SSL support during development
+CFLAGS = -Wall -I$(EPLIB_DIR)/Config -I$(EPLIB_DIR)/e-Paper -I$(EPLIB_DIR)/Fonts -I$(EPLIB_DIR)/GUI -I. -DRPI -DUSE_DEV_LIB -DNO_SSL
 
+LDFLAGS = -lrt -lgpiod -lm
 TARGET = civetwebserver
 
 all: $(TARGET)
@@ -33,3 +32,5 @@ $(TARGET): $(CIVETWEB_SRCS) $(EPLIB_SRCS)
 
 clean:
 	rm -f $(TARGET)
+
+.PHONY: all clean
