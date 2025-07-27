@@ -1763,7 +1763,7 @@ DEBUG_TRACE_FUNC(const char *func, unsigned line, const char *fmt, ...)
 
 
 #define MD5_STATIC static
-#include "incl/md5.inl"
+#include "md5.inl"
 
 /* Darwin prior to 7.0 and Win32 do not have socklen_t */
 #if defined(NO_SOCKLEN_T)
@@ -1851,7 +1851,7 @@ typedef struct SSL_CTX SSL_CTX;
 /* SSL loaded dynamically from DLL / shared object */
 /* Add all prototypes here, to be independent from OpenSSL source
  * installation. */
-#include "incl/openssl_dl.inl"
+#include "openssl_dl.inl"
 
 #endif /* Various SSL bindings */
 
@@ -4044,10 +4044,10 @@ header_has_option(const char *header, const char *option)
 
 
 /* Sorting function implemented in a separate file */
-#include "incl/sort.inl"
+#include "sort.inl"
 
 /* Pattern matching has been reimplemented in a new file */
-#include "incl/match.inl"
+#include "match.inl"
 
 
 /* HTTP 1.1 assumes keep alive if "Connection:" header is not set
@@ -4122,7 +4122,7 @@ suggest_connection_header(const struct mg_connection *conn)
 }
 
 
-#include "incl/response.inl"
+#include "response.inl"
 
 
 static void
@@ -14435,7 +14435,7 @@ set_throttle(const char *spec, const union usa *rsa, const char *uri)
 
 
 /* The mg_upload function is superseded by mg_handle_form_request. */
-#include "incl/handle_form.inl"
+#include "handle_form.inl"
 
 
 static int

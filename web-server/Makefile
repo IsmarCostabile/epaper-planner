@@ -1,5 +1,5 @@
 CC = gcc
-CIVETWEB_DIR = .
+CIVETWEB_DIR = civetweb/
 CIVETWEB_SRCS = $(CIVETWEB_DIR)/civetweb.c $(CIVETWEB_DIR)/main.c
 EPLIB_DIR = ../epaper-lib
 EPLIB_SRCS = \
@@ -23,7 +23,7 @@ EPLIB_SRCS = \
 CFLAGS = -Wall -I$(EPLIB_DIR)/Config -I$(EPLIB_DIR)/e-Paper -I$(EPLIB_DIR)/Fonts -I$(EPLIB_DIR)/GUI -I. -DRPI -DUSE_DEV_LIB -DNO_SSL
 
 LDFLAGS = -lrt -lgpiod -lm
-TARGET = civetwebserver
+TARGET = epaper-planner
 
 all: $(TARGET)
 
