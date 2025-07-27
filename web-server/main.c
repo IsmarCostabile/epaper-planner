@@ -13,6 +13,7 @@ void init_epaper() {
         return;
     }
     EPD_7IN3F_Init();
+    EPD_7IN3F_Clear(EPD_7IN3F_WHITE); 
     printf("E-paper initialized\n");
 }
 
