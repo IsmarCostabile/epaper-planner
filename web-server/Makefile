@@ -1,7 +1,7 @@
 CC = gcc
 CIVETWEB_DIR = civetweb/
 CIVETWEB_SRCS = $(CIVETWEB_DIR)/civetweb.c main.c
-EPLIB_DIR = ../epaper-lib
+EPLIB_DIR = ./epaper-lib
 EPLIB_SRCS = \
     $(EPLIB_DIR)/Config/DEV_Config.c \
     $(EPLIB_DIR)/Config/RPI_gpiod.c \
