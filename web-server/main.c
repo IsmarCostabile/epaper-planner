@@ -1,15 +1,9 @@
+#include "civetweb.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-
 #include "DEV_Config.h"
 #include "EPD_7in3f.h"
-
-#define PORT 8080
-#define BUFFER_SIZE 1024
 
 // E-paper initialization
 void init_epaper() {
@@ -27,93 +21,64 @@ void clear_epaper() {
     EPD_7IN3F_Clear(EPD_7IN3F_WHITE); 
 }
 
-void handle_request(int client_socket) {
-    char buffer[BUFFER_SIZE];
-    ssize_t bytes_read = recv(client_socket, buffer, BUFFER_SIZE - 1, 0);
-    if (bytes_read < 0) {
-        perror("recv failed");
-        return;
-    }
-    buffer[bytes_read] = '\0';
+// request handler
+int handleHello(struct mg_connection *conn, void *cbdata) {
+    mg_printf(conn,
+        "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n");
+    printf("hello pressed\n");
+    return 200;
+}
 
-    printf("Received request:\n%s\n", buffer);
+// form submissions handler (Post req.)
+int handleForm(struct mg_connection *conn, void *cbdata) {
+    char post_data[1024];
+    int post_data_len = mg_read(conn, post_data, sizeof(post_data));
+    post_data[post_data_len] = '\0';
 
-    // Serve index.html
-    if (strstr(buffer, "GET / HTTP/1.1") || strstr(buffer, "GET /index.html HTTP/1.1")) {
-        FILE *html_file = fopen("index.html", "r");
-        if (html_file == NULL) {
-            const char *response = "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\n\r\nFile not found";
-            send(client_socket, response, strlen(response), 0);
-        } else {
-            fseek(html_file, 0, SEEK_END);
-            long file_size = ftell(html_file);
-            fseek(html_file, 0, SEEK_SET);
+    mg_printf(conn,
+        "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
+        "<html><body><h1>Form Data Received:</h1><pre>%s</pre></body></html>",
+        post_data);
 
-            char *html_content = malloc(file_size + 1);
-            fread(html_content, 1, file_size, html_file);
-            html_content[file_size] = '\0';
-            fclose(html_file);
+    return 200;
+}
 
-            char header[BUFFER_SIZE];
-            snprintf(header, BUFFER_SIZE, "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: %ld\r\n\r\n", file_size);
-            send(client_socket, header, strlen(header), 0);
-            send(client_socket, html_content, file_size, 0);
-            free(html_content);
-        }
-    }
-    // Handle clear-epaper POST request
-    else if (strstr(buffer, "POST /clear-epaper HTTP/1.1")) {
+void handleClear(struct mg_connection* conn, void* cbdata) {
+        mg_printf(conn,
+        "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\n");
+        printf("clearin e-paper\n");
         clear_epaper();
-        const char *response = "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nE-paper clear command sent.";
-        send(client_socket, response, strlen(response), 0);
-    }
-    else {
-        const char *response = "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\n\r\nNot Found";
-        send(client_socket, response, strlen(response), 0);
-    }
-
-    close(client_socket);
 }
 
 int main() {
-    int server_fd, new_socket;
-    struct sockaddr_in address;
-    int addrlen = sizeof(address);
+    const char *options[] = {
+        "document_root", "./templates",     // Serve static files from this dir
+        "listening_ports", "8080",
+        0
+    };
 
-    // Create socket file descriptor
-    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
-        perror("socket failed");
-        exit(EXIT_FAILURE);
-    }
+    struct mg_callbacks callbacks;
+    struct mg_context *ctx;
 
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons(PORT);
+    memset(&callbacks, 0, sizeof(callbacks));
+    ctx = mg_start(&callbacks, 0, options);
 
-    // Bind socket to port
-    if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0) {
-        perror("bind failed");
-        exit(EXIT_FAILURE);
-    }
+    // Register routes
+    mg_set_request_handler(ctx, "/hello", handleHello, 0);
+    mg_set_request_handler(ctx, "/submit", handleForm, 0);
+    mg_set_request_handler(ctx, "/clear-epaper", handleClear, 0);
 
-    // Listen for incoming connections
-    if (listen(server_fd, 3) < 0) {
-        perror("listen");
-        exit(EXIT_FAILURE);
-    }
+    printf("Server running on http://localhost:8080\n");
 
-    printf("Server listening on port %d\n", PORT);
-
-    // Initialize e-paper (placeholder)
+    printf("Initializing e-paper");
     init_epaper();
+    printf("finished initializing e-paper");
 
+    // Keep server running
     while (1) {
-        if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
-            perror("accept");
-            exit(EXIT_FAILURE);
-        }
-        handle_request(new_socket);
+        sleep(1);
     }
 
+    mg_stop(ctx);
     return 0;
 }
