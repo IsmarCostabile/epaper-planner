@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+        }
+        form, .actions {
+            margin-bottom: 1em;
+        }
+        input[type="text"] {
+            padding: 0.5em;
+            margin-right: 0.5em;
+        }
+        input[type="submit"], button {
+            padding: 0.5em 1em;
+            margin-right: 0.5em;
+        }
+        #result {
+            margin-top: 1em;
+            padding: 0.75em;
+            border: 1px solid #ccc;
+            min-height: 1.5em;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>My Form</h1>
+    <form action="/submit" method="POST">
+        <input type="text" name="username" placeholder="Enter name" />
+        <input type="submit" value="Submit" />
+    </form>
+    <div class="actions">
+        <a href="/hello">Say Hello</a>
+        <button id="helloBtn">Say Hello</button>
+        <button id="clearBtn">Clear epaper</button>
+    </div>
+    <div id="result"></div>
+    <script>
+        document.getElementById('helloBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            fetch('/hello', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('result').textContent = data;
+                });
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            fetch('/clear-epaper', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('result').textContent = data;
+                });
+        });
+    </script>
+</body>
+</html>

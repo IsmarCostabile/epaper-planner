@@ -24,7 +24,7 @@ void init_epaper() {
 // Clearing e-paper
 void clear_epaper() {
     printf("E-paper cleared\n");
-    EPD_7IN3F_Clear(0xFF); // Assuming 0xFF is white for clearing
+    EPD_7IN3F_Clear(EPD_7IN3F_WHITE); 
 }
 
 void handle_request(int client_socket) {

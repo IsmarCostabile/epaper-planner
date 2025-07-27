@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "gui_paint.h": "c"
+        "gui_paint.h": "c",
+        "response.inl": "c",
+        "handle_form.inl": "c"
     }
 }
